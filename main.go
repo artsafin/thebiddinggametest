@@ -54,7 +54,7 @@ func main() {
             log.Print(err)
         }
         if winner != nil {
-            winnerLine := strings.Replace(fmt.Sprintf("%v", winner.bids), " ", ";", -1)
+            winnerLine := strings.Replace(fmt.Sprintf("%v", winner.bids), " ", ",", -1)
             winnersFile.WriteString(winnerLine[1:len(winnerLine)-1] + "\n")
         }
     }
