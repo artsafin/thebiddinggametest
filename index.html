@@ -13,24 +13,25 @@ window.onload = function () {
         animationEnabled: false,   // change to true
         data: []
     });
+
     loadData(function(data){
         for (var i=0, len = data.length; i<len; i++) {
             chart.options.data.push({type: "line", dataPoints: data[i]});
         }
         chart.render();
     })
-    // chart.render();
 }
 
 function loadData(cb) {
-    var data = "0;19;31;22;10;18;9;6;6;1;5;1;2;2\n" +
-                 "0;21;60;16;6;7;5;2\n" +
-                 "0;53;4;24;19;4;5;6;10;3\n" +
-                 "0;86;17;40;13;20;6;2;3;1\n" +
-                 "0;81;49;4;12;21;3;1;9;4;1;1\n" +
-                 "0;41;50;5;31;8;14;1\n";
-
-    cb(parseCsv(data))
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            console.log('Received bytes:', xhr.responseText.length);
+            cb(parseCsv(xhr.responseText));
+        }
+    }
+    xhr.open('GET', 'winners.csv', true);
+    xhr.send(null);
 }
 
 function parseCsv(data) {
